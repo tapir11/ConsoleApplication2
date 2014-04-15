@@ -2,24 +2,18 @@
 #include <conio.h>
 using namespace std;
 
-
-void main()
-	{
-
-	const char gracz='@';
-
-
-	//plansza
-	char map[5][13]={
-	{'X','X','X','X','X','X','X','X','X','X','X','X','X'},
-	{'X',' ',' ','X',' ',' ','X','X',' ',' ','X','X','X'},
-	{'X',' ',' ',' ',' ',' ','X','X',' ',' ','X','X','X'},
-	{'X','X','X','X',' ',' ',' ',' ',' ',' ',' ',' ','X'},
-	{'X','X','X','X','X','X','X','X','X','X','X','X','X'}
+const char gracz='@';
+//plansza
+char map[5][13]={
+{'X','X','X','X','X','X','X','X','X','X','X','X','X'},
+{'X',' ',' ','X',' ',' ','X','X',' ',' ','X','X','X'},
+{'X',' ',' ',' ',' ',' ','X','X',' ',' ','X','X','X'},
+{'X','X','X','X',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+{'X','X','X','X','X','X','X','X','X','X','X','X','X'}
 	
-	
-	};
-
+};
+const char potwor='!';
+const char kasa='$';
 
 	struct position
 	{
@@ -28,23 +22,23 @@ void main()
 
 	};
 
-	position graczpos;
-	graczpos.x=1;
-	graczpos.y=1;
-	position oldpos;
-	//po chuj mu wartosci poczatkowe? bez nie dziala
-	oldpos.x=1;
-	oldpos.y=1;
-
-	///////////ruchy/////
-
-
-////////////////////////koniec ruchow///////////////////////////
+position graczpos;
+graczpos.x=1;
+graczpos.y=1;
+position oldpos;
+position kasa;
 
 
 
 
-		int s=0;
+
+void main()
+	{
+
+
+
+
+
 
 	bool stop=0;	
 	do
@@ -53,8 +47,8 @@ void main()
 	
 
 		system("cls");
+		cout<<"X: "<<graczpos.x<<" Y: "<<graczpos.y<<endl;
 		map[graczpos.y][graczpos.x]=gracz;
-
 
 		for(int i=0;i<=4;i++)
 		{
@@ -73,42 +67,46 @@ void main()
 			{
 				//lewo
 				case 'a':
-				if(graczpos.x-1!='X')
+				if(map[graczpos.y][graczpos.x-1]!='X')
 				{
 					oldpos.x=graczpos.x;
+					oldpos.y=graczpos.y;
 					graczpos.x--;
-					map[graczpos.y][oldpos.x]=' ';
+					map[oldpos.y][oldpos.x]=' ';
 				}
 				break;
 
 
 				//prawo
 				case 'd':
-				if(graczpos.x+1!='X')
+				if(map[graczpos.y][graczpos.x+1]!='X')
 				{
 					oldpos.x=graczpos.x;
+					oldpos.y=graczpos.y;
 					graczpos.x++;
-					map[graczpos.y][oldpos.x]=' ';
+					map[oldpos.y][oldpos.x]=' ';
 				}
 				break;
 
 				//up
 				case 'w':
-				if(graczpos.y-1!='X')
+				if(map[graczpos.y-1][graczpos.x]!='X')
 				{
 					oldpos.y=graczpos.y;
+					oldpos.x=graczpos.x;
 					graczpos.y--;
-					map[oldpos.y][graczpos.x]=' ';
+					map[oldpos.y][oldpos.x]=' ';
 				}
 				break;
 
 				//down
 				case 's':
-				if(graczpos.y+1!='X')
+				if(map[graczpos.y+1][graczpos.x]!='X')
 				{
 					oldpos.y=graczpos.y;
+					oldpos.x=graczpos.x;
 					graczpos.y++;
-					map[oldpos.y][graczpos.x]=' ';
+					map[oldpos.y][oldpos.x]=' ';
 				}
 				break;
 
@@ -121,8 +119,7 @@ void main()
 
 	//////////////////////////////konic ruchow//////////////////////
 
-		s++;
-		cout<<s<<endl;
+
 	}
 		while (stop != 1);
 
