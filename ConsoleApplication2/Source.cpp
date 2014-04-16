@@ -11,12 +11,13 @@ char map[5][13]={
 {'X','X','X','X','X','X','X','X','X','X','X','X','X'},
 {'X',' ',' ','X',' ',' ','X','X',' ',' ','X','X','X'},
 {'X',' ',' ',' ',' ',' ','X','X',' ',' ','X','X','X'},
-{'X','X','X','X',' ',' ',' ',' ',' ',' ',' ',' ','X'},
+{'X','X','X',' ',' ',' ',' ',' ',' ',' ',' ',' ','X'},
 {'X','X','X','X','X','X','X','X','X','X','X','X','X'}
 	
 };
 const char potwor='!';
 const char kasa='$';
+const char kurwadzialaj='e';
 
 	struct position
 	{
@@ -24,7 +25,6 @@ const char kasa='$';
 		int y;
 
 	};
-
 
 
 
@@ -40,9 +40,13 @@ void main()
 	position potworoldpos;
 	potworpos.y=3;
 	potworpos.x=4;
+	position endpos;
+	endpos.x=9;
+	endpos.y=1;
 	int pts=0;
 	int hp=100;
 	bool lewak=0;
+	bool win=0;
 
 	do
 		{
@@ -50,6 +54,8 @@ void main()
 			kasapos.y=(rand()%5);
 		}
 	while (map[kasapos.y][kasapos.x]!=' ');
+
+
 
 	bool stop=0;	
 	
@@ -64,10 +70,12 @@ void main()
 		cout<<"X: "<<graczpos.x<<" Y: "<<graczpos.y<<endl;
 		cout<<"X: "<<potworpos.x<<" Y: "<<potworpos.y<<endl;
 
+
+
 		map[potworpos.y][potworpos.x]=potwor;
 		map[kasapos.y][kasapos.x]=kasa;
 		map[graczpos.y][graczpos.x]=gracz;
-
+		map[endpos.y][endpos.x]=kurwadzialaj;
 
 		for(int i=0;i<=4;i++)
 		{
@@ -139,17 +147,21 @@ void main()
 //////////////////////////////konic ruchow//////////////////////
 
 
-		if(map[graczpos.y][graczpos.x]==map[kasapos.y][kasapos.x])
-			{
-				do
-					{
+	if(map[graczpos.y][graczpos.x]==map[potworpos.y][potworpos.x])
+	{
+		graczpos.y=1;
+		graczpos.x=1;
+		hp-=30;
+		if(hp<=0)
+		{
+			stop=1;
+			break;
+		}
+		
 
-						kasapos.x=(rand()%13);
-						kasapos.y=(rand()%5);
-					}
-				while (map[kasapos.y][kasapos.x]!=' ');
-			pts+=10;
-			};
+	}
+
+/////////  @UP jak wstawie to wyzej to sie pierdoli. kurwa czemu?
 
 
 
@@ -172,8 +184,7 @@ void main()
 		potworpos.x--;
 		map[potworoldpos.y][potworoldpos.x]=' ';
 		}
-	
-	
+
 	}
 	else
 	{
@@ -192,6 +203,7 @@ void main()
 		potworpos.x++;
 		map[potworoldpos.y][potworoldpos.x]=' ';
 		}
+		
 	}
 
 
@@ -199,19 +211,49 @@ void main()
 /////////////////////koniec ruchu potwora//////////////////
 
 
-//gdzie to wstawic zebydobrze dzialalo?
-	if(map[graczpos.y][graczpos.x]==map[potworpos.y][potworpos.x])
-	{
-		graczpos.y=1;
-		graczpos.x=1;
-		hp-=30;
-	}
+
+
+
+		if(map[graczpos.y][graczpos.x]==map[kasapos.y][kasapos.x])
+			{
+				do
+					{
+
+						kasapos.x=(rand()%13);
+						kasapos.y=(rand()%5);
+					}
+				while (map[kasapos.y][kasapos.x]!=' ');
+			pts+=10;
+			};
+
+	if(map[graczpos.y][graczpos.x]==map[endpos.y][endpos.x])
+		{
+			win=1;
+			break;
+		}
+
+
+
+
+
+
+
+
 
 
 	}
 		while (stop != 1);
 
 
+if (hp<=0)
+cout<<"umarles hahahhaha \n";
 
+//if(stop!=1)
+//cout<<"zdobyles "<<pts<<" kasy \n";
+
+if (win==1)
+cout<<"ukonczyles gre z wyniekiem: "<<pts<<"$ \n";
+
+getch();
 /////////////////////////////KONIEC KODU/////////////////////////
 }
