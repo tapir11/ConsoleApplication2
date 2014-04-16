@@ -62,7 +62,7 @@ void main()
 	do
 	{
 
-	
+
 
 		system("cls");
 		cout<<"kasa: "<<pts<<endl;
@@ -87,19 +87,10 @@ void main()
 		}
 
 
-		if(map[graczpos.y][graczpos.x]==map[potworpos.y][potworpos.x])
-				{
-					graczpos.y=1;
-					graczpos.x=1;
-					hp-=30;
-					if(hp<=0)
-					{
-						stop=1;
-						break;
-					}
+
+
 		
 
-				}
 
 		/////////////////////////////ruchy////////////////////////
 
@@ -148,6 +139,7 @@ void main()
 					graczpos.y++;
 					map[oldpos.y][oldpos.x]=' ';
 				}
+
 				break;
 
 				
@@ -159,20 +151,7 @@ void main()
 //////////////////////////////konic ruchow//////////////////////
 
 
-	if(map[graczpos.y][graczpos.x]==map[potworpos.y][potworpos.x])
-	{
-		graczpos.y=1;
-		graczpos.x=1;
-		hp-=30;
-		if(hp<=0)
-		{
-			stop=1;
-			break;
-		}
-		
-
-	}
-
+	
 /////////  @UP jak wstawie to wyzej to sie pierdoli. kurwa czemu?
 
 
@@ -221,6 +200,20 @@ void main()
 
 
 /////////////////////koniec ruchu potwora//////////////////
+
+	if(map[graczpos.y][graczpos.x]==map[potworpos.y][potworpos.x])
+	{
+		graczpos.y=1;
+		graczpos.x=1;
+		hp-=30;
+		if(hp<=0)
+		{
+			stop=1;
+			break;
+		}
+		
+
+	}
 
 
 
