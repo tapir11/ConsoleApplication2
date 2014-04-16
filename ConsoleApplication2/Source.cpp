@@ -87,7 +87,19 @@ void main()
 		}
 
 
+		if(map[graczpos.y][graczpos.x]==map[potworpos.y][potworpos.x])
+				{
+					graczpos.y=1;
+					graczpos.x=1;
+					hp-=30;
+					if(hp<=0)
+					{
+						stop=1;
+						break;
+					}
+		
 
+				}
 
 		/////////////////////////////ruchy////////////////////////
 
