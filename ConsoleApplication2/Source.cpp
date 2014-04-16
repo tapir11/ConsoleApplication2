@@ -37,7 +37,12 @@ void main()
 	position oldpos;
 	position kasapos;
 	position potworpos;
+	position potworoldpos;
+	potworpos.y=3;
+	potworpos.x=4;
 	int pts=0;
+	int hp=100;
+	bool lewak=0;
 
 	do
 		{
@@ -55,20 +60,14 @@ void main()
 
 		system("cls");
 		cout<<"kasa: "<<pts<<endl;
+		cout<<"zycie: "<<hp<<endl;
 		cout<<"X: "<<graczpos.x<<" Y: "<<graczpos.y<<endl;
+		cout<<"X: "<<potworpos.x<<" Y: "<<potworpos.y<<endl;
+
+		map[potworpos.y][potworpos.x]=potwor;
 		map[kasapos.y][kasapos.x]=kasa;
 		map[graczpos.y][graczpos.x]=gracz;
-		if(map[graczpos.y][graczpos.x]==map[kasapos.y][kasapos.x])
-			{
-				do
-					{
 
-						kasapos.x=(rand()%13);
-						kasapos.y=(rand()%5);
-					}
-				while (map[kasapos.y][kasapos.x]!=' ');
-			pts+=10;
-			};
 
 		for(int i=0;i<=4;i++)
 		{
@@ -78,6 +77,7 @@ void main()
 			}
 		cout<<endl;
 		}
+
 
 
 
@@ -136,8 +136,76 @@ void main()
 				stop=1;
 				break;
 			}
+//////////////////////////////konic ruchow//////////////////////
 
-	//////////////////////////////konic ruchow//////////////////////
+
+		if(map[graczpos.y][graczpos.x]==map[kasapos.y][kasapos.x])
+			{
+				do
+					{
+
+						kasapos.x=(rand()%13);
+						kasapos.y=(rand()%5);
+					}
+				while (map[kasapos.y][kasapos.x]!=' ');
+			pts+=10;
+			};
+
+
+
+
+/////////////////////////ruch potwora////////////////////
+	if(lewak==0)
+	{
+		if (map[potworpos.y][potworpos.x+1]!='X')
+		{
+			potworoldpos.x=potworpos.x;
+			potworoldpos.y=potworpos.y;
+			potworpos.x++;
+			map[potworoldpos.y][potworoldpos.x]=' ';
+		}
+		else
+		{
+		lewak=1;
+		potworoldpos.x=potworpos.x;
+		potworoldpos.y=potworpos.y;
+		potworpos.x--;
+		map[potworoldpos.y][potworoldpos.x]=' ';
+		}
+	
+	
+	}
+	else
+	{
+		if (map[potworpos.y][potworpos.x-1]!='X')
+		{
+			potworoldpos.x=potworpos.x;
+			potworoldpos.y=potworpos.y;
+			potworpos.x--;
+			map[potworoldpos.y][potworoldpos.x]=' ';
+		}
+		else
+		{
+		lewak=0;
+		potworoldpos.x=potworpos.x;
+		potworoldpos.y=potworpos.y;
+		potworpos.x++;
+		map[potworoldpos.y][potworoldpos.x]=' ';
+		}
+	}
+
+
+
+/////////////////////koniec ruchu potwora//////////////////
+
+
+//gdzie to wstawic zebydobrze dzialalo?
+	if(map[graczpos.y][graczpos.x]==map[potworpos.y][potworpos.x])
+	{
+		graczpos.y=1;
+		graczpos.x=1;
+		hp-=30;
+	}
 
 
 	}
