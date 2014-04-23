@@ -25,8 +25,46 @@ const char kurwadzialaj='e';
 		int y;
 
 	};
+	
 
 
+
+/*
+	
+void move(int posy,int posx)
+	{
+		
+		char collided=map[posy][posx]
+		if (collided == ' ')
+			{
+				
+			}
+		else if (collided  == 'X')
+			{
+				break;	
+			}
+		
+		else if (collided == '$')
+			{
+				pts+=10;
+				do
+					{
+
+						kasapos.x=(rand()%13);
+						kasapos.y=(rand()%5);
+					}
+				while (map[kasapos.y][kasapos.x]!=' ');
+				
+			}
+		else	if (collided == '!')
+			{
+				hp-=30;
+				posx=1;
+				posy=1;
+			}
+	}
+
+*/
 
 void main()
 	{
