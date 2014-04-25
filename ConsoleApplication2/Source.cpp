@@ -19,17 +19,22 @@ const char potwor='!';
 const char kasa='$';
 const char kurwadzialaj='e';
 
-	struct position
-	{
-		int x;
-		int y;
-
-	};
+struct position
+{
+	int x;
+	int y;
+};
 	
+position graczpos;
+position oldpos;
+position kasapos;
+position potworpos;
+position potworoldpos;
+position endpos;
 
 
 
-/*
+
 	
 void move(int posy,int posx)
 	{
@@ -37,6 +42,12 @@ void move(int posy,int posx)
 		char collided=map[posy][posx]
 		if (collided == ' ')
 			{
+				oldpos.x=graczpos.x;
+				oldpos.y=graczpos.y;
+				map[oldpos.y][oldpos.x]=' ';
+				graczpos.x=posx;
+				graczpos.y=posy;
+				map[graczpos.y][graczpos.x]=gracz;
 				
 			}
 		else if (collided  == 'X')
@@ -59,8 +70,9 @@ void move(int posy,int posx)
 		else	if (collided == '!')
 			{
 				hp-=30;
-				posx=1;
-				posy=1;
+				graczpos.x=1;
+				graczpos.y=1;
+				
 			}
 	}
 
@@ -69,16 +81,10 @@ void move(int posy,int posx)
 void main()
 	{
 	srand (time(NULL));
-	position graczpos;
 	graczpos.x=1;
 	graczpos.y=1;
-	position oldpos;
-	position kasapos;
-	position potworpos;
-	position potworoldpos;
 	potworpos.y=3;
 	potworpos.x=4;
-	position endpos;
 	endpos.x=9;
 	endpos.y=1;
 	int pts=0;
@@ -112,7 +118,6 @@ void main()
 
 		map[potworpos.y][potworpos.x]=potwor;
 		map[kasapos.y][kasapos.x]=kasa;
-		map[graczpos.y][graczpos.x]=gracz;
 		map[endpos.y][endpos.x]=kurwadzialaj;
 
 		for(int i=0;i<=4;i++)
@@ -136,48 +141,24 @@ void main()
 			{
 				//lewo
 				case 'a':
-				if(map[graczpos.y][graczpos.x-1]!='X')
-				{
-					oldpos.x=graczpos.x;
-					oldpos.y=graczpos.y;
-					graczpos.x--;
-					map[oldpos.y][oldpos.x]=' ';
-				}
+				move(graczpos.y,graczpos.x-1)
 				break;
+
 
 
 				//prawo
 				case 'd':
-				if(map[graczpos.y][graczpos.x+1]!='X')
-				{
-					oldpos.x=graczpos.x;
-					oldpos.y=graczpos.y;
-					graczpos.x++;
-					map[oldpos.y][oldpos.x]=' ';
-				}
+				move(graczpos.y,graczpos.x+1)
 				break;
 
 				//up
 				case 'w':
-				if(map[graczpos.y-1][graczpos.x]!='X')
-				{
-					oldpos.y=graczpos.y;
-					oldpos.x=graczpos.x;
-					graczpos.y--;
-					map[oldpos.y][oldpos.x]=' ';
-				}
+				move(graczpos.y-1,graczpos.x)
 				break;
 
 				//down
 				case 's':
-				if(map[graczpos.y+1][graczpos.x]!='X')
-				{
-					oldpos.y=graczpos.y;
-					oldpos.x=graczpos.x;
-					graczpos.y++;
-					map[oldpos.y][oldpos.x]=' ';
-				}
-
+				move(graczpos.y+1,graczpos.x)
 				break;
 
 				
