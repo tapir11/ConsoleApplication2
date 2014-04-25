@@ -19,34 +19,100 @@ const char potwor='!';
 const char kasa='$';
 const char kurwadzialaj='e';
 
-	struct position
-	{
-		int x;
-		int y;
+struct position
+{
+	int x;
+	int y;
+};
+	
+position graczpos;
+position oldpos;
+position kasapos;
+position potworpos;
+position potworoldpos;
+position endpos;
+int pts=0;
+int hp=100;
+bool win=0;
 
-	};
+
+
+
+	
+void move(int posy,int posx)
+	{
+		
+		char collided=map[posy][posx];
+		if (collided == ' ')
+			{
+				oldpos.x=graczpos.x;
+				oldpos.y=graczpos.y;
+				map[oldpos.y][oldpos.x]=' ';
+				graczpos.x=posx;
+				graczpos.y=posy;
+				map[graczpos.y][graczpos.x]=gracz;
+				
+			}
+		else if (collided  == 'X')
+			{	
+			}
+
+		else if (collided  == 'e')
+			{	
+				win=1;
+				oldpos.x=graczpos.x;
+				oldpos.y=graczpos.y;
+				map[oldpos.y][oldpos.x]=' ';
+				graczpos.x=posx;
+				graczpos.y=posy;
+				map[graczpos.y][graczpos.x]=gracz;
+			}
+		
+		else if (collided == '$')
+			{
+				
+				oldpos.x=graczpos.x;
+				oldpos.y=graczpos.y;
+				map[oldpos.y][oldpos.x]=' ';
+				graczpos.x=posx;
+				graczpos.y=posy;
+				map[graczpos.y][graczpos.x]=gracz;
+				
+				pts+=10;
+				do
+					{
+
+						kasapos.x=(rand()%13);
+						kasapos.y=(rand()%5);
+					}
+				while (map[kasapos.y][kasapos.x]!=' ');
+				
+			}
+		else	if (collided == '!')
+			{
+				hp-=30;
+				oldpos.x=graczpos.x;
+				oldpos.y=graczpos.y;
+				map[oldpos.y][oldpos.x]=' ';
+				graczpos.x=1;
+				graczpos.y=1;
+				
+			}
+	}
 
 
 
 void main()
 	{
 	srand (time(NULL));
-	position graczpos;
 	graczpos.x=1;
 	graczpos.y=1;
-	position oldpos;
-	position kasapos;
-	position potworpos;
-	position potworoldpos;
 	potworpos.y=3;
 	potworpos.x=4;
-	position endpos;
 	endpos.x=9;
 	endpos.y=1;
-	int pts=0;
-	int hp=100;
 	bool lewak=0;
-	bool win=0;
+	
 
 	do
 		{
@@ -71,10 +137,9 @@ void main()
 		cout<<"X: "<<potworpos.x<<" Y: "<<potworpos.y<<endl;
 
 
-
+		map[graczpos.y][graczpos.x]=gracz;
 		map[potworpos.y][potworpos.x]=potwor;
 		map[kasapos.y][kasapos.x]=kasa;
-		map[graczpos.y][graczpos.x]=gracz;
 		map[endpos.y][endpos.x]=kurwadzialaj;
 
 		for(int i=0;i<=4;i++)
@@ -85,6 +150,20 @@ void main()
 			}
 		cout<<endl;
 		}
+
+			if(map[graczpos.y][graczpos.x]==map[potworpos.y][potworpos.x])
+	{
+		graczpos.y=1;
+		graczpos.x=1;
+		hp-=30;
+		if(hp<=0)
+		{
+			stop=1;
+			break;
+		}
+		
+
+	}
 
 
 
@@ -98,48 +177,24 @@ void main()
 			{
 				//lewo
 				case 'a':
-				if(map[graczpos.y][graczpos.x-1]!='X')
-				{
-					oldpos.x=graczpos.x;
-					oldpos.y=graczpos.y;
-					graczpos.x--;
-					map[oldpos.y][oldpos.x]=' ';
-				}
+				move(graczpos.y,graczpos.x-1);
 				break;
+
 
 
 				//prawo
 				case 'd':
-				if(map[graczpos.y][graczpos.x+1]!='X')
-				{
-					oldpos.x=graczpos.x;
-					oldpos.y=graczpos.y;
-					graczpos.x++;
-					map[oldpos.y][oldpos.x]=' ';
-				}
+				move(graczpos.y,graczpos.x+1);
 				break;
 
 				//up
 				case 'w':
-				if(map[graczpos.y-1][graczpos.x]!='X')
-				{
-					oldpos.y=graczpos.y;
-					oldpos.x=graczpos.x;
-					graczpos.y--;
-					map[oldpos.y][oldpos.x]=' ';
-				}
+				move(graczpos.y-1,graczpos.x);
 				break;
 
 				//down
 				case 's':
-				if(map[graczpos.y+1][graczpos.x]!='X')
-				{
-					oldpos.y=graczpos.y;
-					oldpos.x=graczpos.x;
-					graczpos.y++;
-					map[oldpos.y][oldpos.x]=' ';
-				}
-
+				move(graczpos.y+1,graczpos.x);
 				break;
 
 				
@@ -169,11 +224,11 @@ void main()
 		}
 		else
 		{
-		lewak=1;
-		potworoldpos.x=potworpos.x;
-		potworoldpos.y=potworpos.y;
-		potworpos.x--;
-		map[potworoldpos.y][potworoldpos.x]=' ';
+			lewak=1;
+			potworoldpos.x=potworpos.x;
+			potworoldpos.y=potworpos.y;
+			potworpos.x--;
+			map[potworoldpos.y][potworoldpos.x]=' ';
 		}
 
 	}
@@ -188,11 +243,11 @@ void main()
 		}
 		else
 		{
-		lewak=0;
-		potworoldpos.x=potworpos.x;
-		potworoldpos.y=potworpos.y;
-		potworpos.x++;
-		map[potworoldpos.y][potworoldpos.x]=' ';
+			lewak=0;
+			potworoldpos.x=potworpos.x;
+			potworoldpos.y=potworpos.y;
+			potworpos.x++;
+			map[potworoldpos.y][potworoldpos.x]=' ';
 		}
 		
 	}
@@ -201,41 +256,6 @@ void main()
 
 /////////////////////koniec ruchu potwora//////////////////
 
-	if(map[graczpos.y][graczpos.x]==map[potworpos.y][potworpos.x])
-	{
-		graczpos.y=1;
-		graczpos.x=1;
-		hp-=30;
-		if(hp<=0)
-		{
-			stop=1;
-			break;
-		}
-		
-
-	}
-
-
-
-
-
-		if(map[graczpos.y][graczpos.x]==map[kasapos.y][kasapos.x])
-			{
-				do
-					{
-
-						kasapos.x=(rand()%13);
-						kasapos.y=(rand()%5);
-					}
-				while (map[kasapos.y][kasapos.x]!=' ');
-			pts+=10;
-			};
-
-	if(map[graczpos.y][graczpos.x]==map[endpos.y][endpos.x])
-		{
-			win=1;
-			break;
-		}
 
 
 
@@ -244,6 +264,12 @@ void main()
 
 
 
+
+
+
+
+	if(win==1)
+		break;
 
 
 	}
@@ -253,8 +279,6 @@ void main()
 if (hp<=0)
 cout<<"umarles hahahhaha \n";
 
-//if(stop!=1)
-//cout<<"zdobyles "<<pts<<" kasy \n";
 
 if (win==1)
 cout<<"ukonczyles gre z wyniekiem: "<<pts<<"$ \n";
