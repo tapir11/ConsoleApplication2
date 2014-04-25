@@ -31,6 +31,7 @@ position kasapos;
 position potworpos;
 position potworoldpos;
 position endpos;
+<<<<<<< HEAD
 int pts=0;
 int hp=100;
 bool win=0;
@@ -99,8 +100,54 @@ void move(int posy,int posx)
 				
 			}
 	}
+=======
 
 
+>>>>>>> 86431656c0cbee981d77d962ca37806c21affabe
+
+
+	
+void move(int posy,int posx)
+	{
+		
+		char collided=map[posy][posx]
+		if (collided == ' ')
+			{
+				oldpos.x=graczpos.x;
+				oldpos.y=graczpos.y;
+				map[oldpos.y][oldpos.x]=' ';
+				graczpos.x=posx;
+				graczpos.y=posy;
+				map[graczpos.y][graczpos.x]=gracz;
+				
+			}
+		else if (collided  == 'X')
+			{
+				break;	
+			}
+		
+		else if (collided == '$')
+			{
+				pts+=10;
+				do
+					{
+
+						kasapos.x=(rand()%13);
+						kasapos.y=(rand()%5);
+					}
+				while (map[kasapos.y][kasapos.x]!=' ');
+				
+			}
+		else	if (collided == '!')
+			{
+				hp-=30;
+				graczpos.x=1;
+				graczpos.y=1;
+				
+			}
+	}
+
+*/
 
 void main()
 	{
@@ -177,24 +224,40 @@ void main()
 			{
 				//lewo
 				case 'a':
+<<<<<<< HEAD
 				move(graczpos.y,graczpos.x-1);
+=======
+				move(graczpos.y,graczpos.x-1)
+>>>>>>> 86431656c0cbee981d77d962ca37806c21affabe
 				break;
 
 
 
 				//prawo
 				case 'd':
+<<<<<<< HEAD
 				move(graczpos.y,graczpos.x+1);
+=======
+				move(graczpos.y,graczpos.x+1)
+>>>>>>> 86431656c0cbee981d77d962ca37806c21affabe
 				break;
 
 				//up
 				case 'w':
+<<<<<<< HEAD
 				move(graczpos.y-1,graczpos.x);
+=======
+				move(graczpos.y-1,graczpos.x)
+>>>>>>> 86431656c0cbee981d77d962ca37806c21affabe
 				break;
 
 				//down
 				case 's':
+<<<<<<< HEAD
 				move(graczpos.y+1,graczpos.x);
+=======
+				move(graczpos.y+1,graczpos.x)
+>>>>>>> 86431656c0cbee981d77d962ca37806c21affabe
 				break;
 
 				
